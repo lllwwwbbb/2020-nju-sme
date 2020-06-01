@@ -17,9 +17,9 @@ sudo apt-get install -y git python3.6 python3.6-venv python3.6-dev
 ```bash
 # clone codes
 git clone [this_project] /to/path
-git submodule update --init --recursive
 
-# init defects4j
+# init defects4j under FL-project
+git clone [defcts4j] 
 cd defects4j && ./init.sh && cd .. 
 
 # create venv and install python3 packages
