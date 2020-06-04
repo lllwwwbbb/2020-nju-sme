@@ -1,0 +1,12 @@
+# Intellij
+out
+.idea
+*.iml
+
+# maven
+target
+
+# tmp & output
+_tmp
+sootOutput
+
