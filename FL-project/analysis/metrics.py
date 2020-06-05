@@ -413,13 +413,13 @@ _TABLE_FIELD_NAMES = [
     'TOP-3',
     'TOP-5',
     # 'MRR@TOP5',
-    'REACH-1',
+    # 'REACH-1',
     # 'AT-1',
     'EXAM',
     # 'MRR@LINE5',
-    'E-inspect-1',
-    'E-inspect-3',
-    'E-inspect-5',
+    # 'E-inspect-1',
+    # 'E-inspect-3',
+    # 'E-inspect-5',
     # 'TOP-1%',
     # 'TOP-2%',
     # 'TOP-3%',
@@ -466,12 +466,12 @@ def print_metrics_table(formula, pt, bug_size, top_lines_no, top_ln,
     # for i in range(len(top_ln)):
     #     metric_map['AT-%d' % top_ln[i]] = '%d(%.1f%%)' % (
     #         top_ln_count[i], top_ln_count[i] * 100 / bug_size)
-    for i in range(len(ctop_ln)):
-        metric_map['REACH-%d' % ctop_ln[i]] = '%d(%.1f%%)' % (
-            ctop_ln_count[i], ctop_ln_count[i] * 100 / bug_size)
-    for i in range(len(e_inspect_n)):
-        metric_map['E-inspect-%d' % e_inspect_n[i]] = '%d(%.1f%%)' % (
-            e_inspect_n_count[i], e_inspect_n_count[i] * 100 / bug_size)
+    # for i in range(len(ctop_ln)):
+    #     metric_map['REACH-%d' % ctop_ln[i]] = '%d(%.1f%%)' % (
+    #         ctop_ln_count[i], ctop_ln_count[i] * 100 / bug_size)
+    # for i in range(len(e_inspect_n)):
+    #     metric_map['E-inspect-%d' % e_inspect_n[i]] = '%d(%.1f%%)' % (
+    #         e_inspect_n_count[i], e_inspect_n_count[i] * 100 / bug_size)
     # for percent in [0.7, 0.8, 0.9]:
     #     metric_map['Rank-%d%%' % (percent * 100)] = '%d' % sorted(top_ranks)[
     #         int(bug_size * percent)]

@@ -6,10 +6,8 @@ from itertools import groupby
 from scipy.sparse import csr_matrix
 from numpy import array, mean, median
 
-from inspects import append_rank
 from localize.defects4j import get_default_defects4j_instance
 from analysis.ranklist import write_rank_list
-from analysis.learning2rank import _BUGGY_LINES_MAP
 
 _JAR_PATH = join(dirname(realpath(__file__)), 'libs', 'static_analysis',
                  'static-analyzer.jar')
@@ -79,10 +77,14 @@ def transform_rank_list(stmt_susps_list, stmt_pairs):
         row_ind.append(i)
         col_ind.append(i)
     alpha, n_iter = 0.4, 1
-    for s in stmt_depended_map:
+    for s in stmt_list:
         s_ind = stmt_ind_map[s]
+        if s not in stmt_depended_map:
+            continue
         avg_alpha = alpha / len(stmt_depended_map[s])
         for s_depended in stmt_depended_map[s]:
+            if s_depended not in stmt_ind_map:
+                continue
             sd_ind = stmt_ind_map[s_depended]
             # add sd's susps * avg_alpha to s's susps
             row_ind.append(sd_ind)
@@ -103,7 +105,7 @@ def transform_and_write_rank_list(args, graph_name, pb_id, stmt_pairs,
     logger.info('transform rank list for {}', pb_id)
     res_susps_list = transform_rank_list(stmt_susps_list, stmt_pairs)
     logger.info('write result rank list for {}', pb_id)
-    output_file = '%s.%s%s' % (pb_id, args.method_name, graph_name)
+    output_file = '%s.%s-%s' % (pb_id, args.method_name, graph_name)
     write_rank_list(res_susps_list, join(args.output_dir, output_file))
 
 
@@ -139,27 +141,3 @@ def get_depended_features(susps_map, stmt_pairs):
         stmt_features_map[s] = tuple(depended_susps_list[0: _FEATURE_TOP_N] +
                                      depend_susps_list[0: _FEATURE_TOP_N])
     return stmt_features_map
-
-
-def get_mrank_features(susps_map, mmap_pairs, stmt_susps_list):
-    top_n_count = 30
-    top_n_method = 3
-    s_method_map = {s: m for s, m in mmap_pairs}
-    top_n_stmts = map(lambda x: x[0], stmt_susps_list[:top_n_count])
-    dummy = 1
-    method_stmts_ranks = []
-    for k, g in groupby(top_n_stmts, lambda s: s_method_map.get(s, dummy)):
-        if k != dummy:
-            method_stmts_ranks.append([k, list(g)])
-    append_rank(method_stmts_ranks, susps_map)
-    mrank_features_map = {s: (0,) * top_n_method for s in susps_map}
-    for m_stmts_rank in method_stmts_ranks:
-        rank = m_stmts_rank[-1]
-        if rank >= top_n_method:
-            break
-        stmts = m_stmts_rank[1]
-        feature_v = [0] * top_n_method
-        feature_v[rank] = 1
-        for s in stmts:
-            mrank_features_map[s] = tuple(feature_v)
-    return mrank_features_map

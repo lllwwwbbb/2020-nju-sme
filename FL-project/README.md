@@ -37,5 +37,11 @@ python3.6 -m venv .venv
 .venv/bin/python3 ranklist.py -f ./data/feature_lists/ -o ./data/rank_lists
 
 # 对生成的 ranklist 计算 metric
-.venv/bin/python3 metric.py data/rank_lists/ -t 
+.venv/bin/python3 metric.py ./data/rank_lists/ -t 
+
+# 使用数据以来信息增强定位结果（-m 可取 ochiai,barinel,op2,dstar,tarantula）
+.venv/bin/python3 transform.py -d ./data/stmt_graph -r ./data/rank_lists -o ./data/sa_rank_lists -m ochiai
+
+# 对增强后的定位结果计算 metric
+.venv/bin/python3 metric.py ./data/sa_rank_lists/ -t 
 ```
