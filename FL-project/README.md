@@ -27,6 +27,12 @@ python3.6 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 ```
 
+# Data
+使用 GZoltar 对 Defects4J 数据集进行实验收集的数据打包在 gzoltars.zip 文件中。
+
+使用我们实现的 static-analyzer 工具抽取的语句依赖信息打包在 stmt_graph.zip 文件中。
+
+这些 zip 文件可以解压到项目目录下的 data 文件夹下进行使用。
 # Run
 假设实验生成的 gzoltars 数据位于 *./data/gzoltars* 目录下。
 ```bash

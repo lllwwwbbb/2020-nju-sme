@@ -283,3 +283,7 @@ nohup.out*
 
 # local config
 .local.*
+
+# data zip
+!gzoltars.zip
+!stmt_graph.zip
