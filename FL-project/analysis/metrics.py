@@ -415,7 +415,7 @@ _TABLE_FIELD_NAMES = [
     # 'MRR@TOP5',
     # 'REACH-1',
     # 'AT-1',
-    'EXAM',
+    # 'EXAM',
     # 'MRR@LINE5',
     # 'E-inspect-1',
     # 'E-inspect-3',
